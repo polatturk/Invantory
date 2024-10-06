@@ -60,17 +60,25 @@ namespace Invantory.Controllers
             return View(model); 
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(string searchItem)
         {
-            var item = _context.Items.SingleOrDefault(a => a.Id == id);
+            if (string.IsNullOrWhiteSpace(searchItem))
+            {
+                ViewBag.ErrorMessage = "Arama terimi boþ olamaz!";
+                return View("Error"); 
+            }
+
+            var item = _context.Items
+                .FirstOrDefault(a => a.Name.ToLower() == searchItem.ToLower());
+
             if (item == null)
             {
-                return NotFound(); // Eðer item bulunamazsa 404 döndür
+                ViewBag.ErrorMessage = "Ürün bulunamadý!";
+                return View("Error"); 
             }
+
             return View(item); 
         }
-
-
 
     }
 }
