@@ -6,7 +6,6 @@
 <br />
 <h3 class="text-center" style="color:#343a40; font-size: 28px; font-weight: bold; margin-bottom: 30px;">Inventory Application</h3>
 
-<!-- Form for adding a new item -->
 <form action="/Home/Form" method="get" style="max-width: 450px; margin: 0 auto; background: linear-gradient(145deg, #e0e0e0, #f7f7f7); padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);" autocomplete="off">
     <div class="row mb-3">
         <div class="col-md-12 mb-4">
@@ -15,7 +14,7 @@
         </div>
         <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 18px; background-color: #007bff; border: none; border-radius: 8px; box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3); transition: all 0.3s; font-weight: 600;">
-                Ekle
+                Add
             </button>
         </div>
     </div>
@@ -28,8 +27,7 @@
         <tr>
             <th scope="col" width="15%">Item Image</th>
             <th scope="col" width="20%">Item Name</th>
-            <th scope="col" width="20%">Item Quantity</th>
-            <th scope="col" width="15%">Expiration Date</th>
+            <th scope="col" width="20%">Detail</th>
             <th scope="col" width="20%">Actions</th>
         </tr>
     </thead>
@@ -41,8 +39,9 @@
                     <img src="@item.ImagePath" alt="@item.Name" style="max-width: 100px; max-height: 100px; object-fit: cover;" />
                 </td>
                 <td>@item.Name</td>
-                <td>@item.Quantity</td>
-                <td>@item.ExpirationDate</td>
+                <td>
+                    <a href="/Home/Details/@item.Id" class="btn btn-sm btn-outline-info">Detail</a>
+                </td>
                 <td>
                     <a href="/Home/Delete/@item.Id" onclick="return confirm('Are you sure you want to delete this item?')" class="btn btn-sm btn-outline-danger">Delete</a>
                 </td>

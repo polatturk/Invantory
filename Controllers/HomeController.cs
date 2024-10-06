@@ -25,32 +25,25 @@ namespace Invantory.Controllers
         {
             if (Image != null && Image.Length > 0)
             {
-                // Dosya adýný ve yolunu belirle
                 var fileName = Path.GetFileName(Image.FileName);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
 
-                // Dosyayý sunucuya kaydet
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     Image.CopyTo(stream);
                 }
 
-                // Modelin ImagePath alanýna dosya yolunu ekle
                 model.ImagePath = "/images/" + fileName;
             }
 
             model.Created = DateTime.Now;
             model.Updated = DateTime.Now;
 
-            // Veritabanýna kaydet
             _context.Add(model);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
-
-
-
 
         public IActionResult Delete(int id)
         {
@@ -66,6 +59,17 @@ namespace Invantory.Controllers
             };
             return View(model); 
         }
+
+        public IActionResult Details(int id)
+        {
+            var item = _context.Items.SingleOrDefault(a => a.Id == id);
+            if (item == null)
+            {
+                return NotFound(); // Eðer item bulunamazsa 404 döndür
+            }
+            return View(item); 
+        }
+
 
 
     }
