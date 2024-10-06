@@ -20,24 +20,65 @@ namespace Invantory.Controllers
 
             return View(items);
         }
-        public IActionResult Add(Item model)
+        [HttpPost]
+        public IActionResult Add(Item model, IFormFile Image)
         {
+            if (Image != null && Image.Length > 0)
+            {
+                var fileName = Path.GetFileName(Image.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    Image.CopyTo(stream);
+                }
+
+                model.ImagePath = "/images/" + fileName;
+            }
+
             model.Created = DateTime.Now;
             model.Updated = DateTime.Now;
+
             _context.Add(model);
             _context.SaveChanges();
-            return RedirectToAction("Form");
 
+            return RedirectToAction("Index");
         }
+
         public IActionResult Delete(int id)
         {
             _context.Remove(_context.Items.Single(a => a.Id == id));
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        public IActionResult Form()
+        public IActionResult Form(string itemName)
         {
-            return View();
+            var model = new Item
+            {
+                Name = itemName 
+            };
+            return View(model); 
         }
+
+        public IActionResult Details(string searchItem)
+        {
+            if (string.IsNullOrWhiteSpace(searchItem))
+            {
+                ViewBag.ErrorMessage = "Arama terimi boþ olamaz!";
+                return View("Error"); 
+            }
+
+            var item = _context.Items
+                .FirstOrDefault(a => a.Name.ToLower() == searchItem.ToLower());
+
+            if (item == null)
+            {
+                ViewBag.ErrorMessage = "Ürün bulunamadý!";
+                return View("Error"); 
+            }
+
+            return View(item); 
+        }
+
     }
 }

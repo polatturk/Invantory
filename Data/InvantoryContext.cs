@@ -43,5 +43,6 @@ namespace Invantory.Data
         //       .HasForeignKey(s => s.LocationId)
         //       .OnDelete(DeleteBehavior.Cascade);
         //}
+        
     }
 }

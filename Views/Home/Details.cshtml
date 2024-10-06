@@ -1,0 +1,25 @@
+﻿@model Item
+
+@{
+    ViewData["Title"] = "Item Details";
+}
+
+<div class="container mt-5">
+    <h3 class="text-center" style="color: #343a40; font-size: 28px; font-weight: bold;">@Model.Name</h3>
+
+    <div class="card" style="max-width: 400px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+        <img src="@Model.ImagePath" alt="@Model.Name" class="card-img-top" style="object-fit: cover; height: 200px;" />
+        <div class="card-body">
+            <p><strong>Quantity:</strong> @Model.Quantity</p>
+            <p><strong>Expiration Date:</strong> @Model.ExpirationDate?.ToString("d")</p>
+            <p><strong>Created At:</strong> @Model.Created.ToString("g")</p>
+            <p><strong>Updated At:</strong> @Model.Updated.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/Home" class="btn btn-primary" style="padding: 12px 30px; font-size: 18px; border-radius: 8px;">
+            Back to Inventory
+        </a>
+    </div>
+</div>
