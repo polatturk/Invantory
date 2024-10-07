@@ -3,10 +3,11 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
 <br />
 <h3 class="text-center" style="color:#343a40; font-size: 28px; font-weight: bold; margin-bottom: 30px;">Inventory Application</h3>
 
-@* ürün ekleme ve arama butonu *@
 <form action="/Home/Details" method="get" style="max-width: 450px; margin: 0 auto; display: flex; align-items: center; background: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);" autocomplete="off">
     <div style="flex: 1;">
         <input type="text" id="searchItem" name="searchItem" required placeholder="Search Item" class="form-control" list="itemList" style="border: none; padding: 12px; border-radius: 5px 0 0 5px;" />
@@ -129,3 +130,4 @@
         margin: 0 5px;
     }
 </style>
+<script src="~/js/site.js" asp-append-version="true"></script>
