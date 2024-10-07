@@ -64,7 +64,7 @@ namespace Invantory.Controllers
         {
             if (string.IsNullOrWhiteSpace(searchItem))
             {
-                ViewBag.ErrorMessage = "Arama terimi boþ olamaz!";
+                ViewBag.ErrorMessage = "Search term cannot be empty!";
                 return View("Error"); 
             }
 
@@ -73,7 +73,7 @@ namespace Invantory.Controllers
 
             if (item == null)
             {
-                ViewBag.ErrorMessage = "Ürün bulunamadý!";
+                ViewBag.ErrorMessage = "Product not found!";
                 return View("Error"); 
             }
 
