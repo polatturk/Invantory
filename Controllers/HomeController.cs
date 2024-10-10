@@ -44,7 +44,6 @@ namespace Invantory.Controllers
 
             return RedirectToAction("Index");
         }
-
         public IActionResult Delete(int id)
         {
             _context.Remove(_context.Items.Single(a => a.Id == id));
