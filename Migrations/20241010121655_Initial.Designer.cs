@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Invantory.Migrations
 {
     [DbContext(typeof(InvantoryContext))]
-    [Migration("20241006120141_Initial")]
+    [Migration("20241010121655_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -40,6 +40,10 @@ namespace Invantory.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
