@@ -16,10 +16,15 @@ namespace Invantory.Controllers
         }
         public IActionResult Index()
         {
-            List<Item> items = _context.Items.ToList();
+            var items = _context.Items
+                .Include(i => i.Place)
+                .ThenInclude(p => p.Section)
+                .ThenInclude(s => s.Location)
+                .ToList();
 
             return View(items);
         }
+
         [HttpPost]
         public IActionResult Add(Item model, IFormFile Image)
         {
@@ -52,12 +57,24 @@ namespace Invantory.Controllers
         }
         public IActionResult Form(string itemName)
         {
+            var placeList = _context.Places
+                                    .Include(p => p.Section)     
+                                    .ThenInclude(s => s.Location) 
+                                    .ToList();
+
+            var sectionList = _context.Sections.ToList();  
+            var locationList = _context.Locations.ToList();
+
             var model = new Item
             {
-                Name = itemName 
+                Name = itemName
             };
-            return View(model); 
+
+            var tupleModel = new Tuple<Item, List<Place>, List<Section>, List<Location>>(model, placeList, sectionList, locationList);
+
+            return View(tupleModel);
         }
+
 
         public IActionResult Details(string searchItem)
         {
@@ -68,7 +85,8 @@ namespace Invantory.Controllers
             }
 
             var item = _context.Items
-                .FirstOrDefault(a => a.Name.ToLower() == searchItem.ToLower());
+               .Include(i => i.Place)  
+               .FirstOrDefault(a => a.Name.ToLower() == searchItem.ToLower());
 
             if (item == null)
             {
